@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class SimpleFormTest {
@@ -39,5 +41,26 @@ public class SimpleFormTest {
         $x("//blockquote").shouldHave(text("спрашивает"));
 
         $x("//*[@class='unique_class']").shouldBe(visible);
+    }
+
+    @DisplayName("Поиск текста")
+    @Test
+    void textSearch() {
+        open("https://slqa.ru/cases/xPathSimpleForm/");
+
+        // Поиск элемента по точному совпадению текста (библиотека Selenide)
+        $(byText("Текстовое поле 1:")).shouldBe(visible);
+
+        // Поиск элемента по точному содержаию текста (xPath)
+        $x("//*[text()='Текстовое поле 2:']").shouldBe(visible); // Не находит !!!
+
+        // Поиск элемента по содержанию текста (библиотека Selenide)
+        $(withText("Москва")).shouldHave(text("250 единиц"));
+
+        // Поиск элемента по содержаию текста (xPath)
+        $x("//*[contains(text(), 'Питер')]").shouldHave(text("180 единиц"));
+
+        // Поиск элемента по началу текста (только xPath)
+        $x("//*[starts-with(text(),'Россия')]").shouldHave(text("площадь 17 234 031"));
     }
 }
