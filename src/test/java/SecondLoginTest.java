@@ -21,6 +21,15 @@ public class SecondLoginTest {
     private static final String GREETING_MSG = "#greeting";
     private static final String LOGIN_MSG = "#message";
 
+    @BeforeAll
+    static void prepareBeforeAllTests() {
+        // Время ожидания загрузки страницы при открытии
+        Configuration.pageLoadTimeout = 5_000;
+        // Время ожидания появления на странице элемента
+        Configuration.timeout = 5_000;
+
+    }
+
     @BeforeEach
     void prepareForTest(TestInfo testInfo) {
         System.out.println("Начало теста " + testInfo.getDisplayName());
