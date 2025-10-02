@@ -10,20 +10,34 @@ public class SimpleFormTest {
 
     @DisplayName("Использование специальных команд Selenide")
     @Test
-    void test01SpecificCommands() {
+    void specificCommands() {
         open("https://slqa.ru/cases/SimpleForm/");
         $(By.id("unique_id")).setValue("Уникальный id");
         $(By.name("unique_name")).setValue("Уникальное имя");
         $(By.tagName("blockquote")).shouldHave(text("спрашивает"));
+
         $(By.className("unique_class")).shouldBe(visible);
     }
 
+    @DisplayName("CSS-селекторы")
     @Test
-    void test02CSSSelectors() {
+    void cssSelectors() {
         open("https://slqa.ru/cases/SimpleForm/");
         $("#unique_id").setValue("Уникальный id");
         $("[name=unique_name]").setValue("Уникальное имя");
         $("blockquote").shouldHave(text("спрашивает"));
+
         $(".unique_class").shouldBe(visible);
+    }
+
+    @DisplayName("xPath")
+    @Test
+    void xPathSelectors() {
+        open("https://slqa.ru/cases/SimpleForm/");
+        $x("//*[@id='unique_id']").setValue("Уникальный id");
+        $x("//*[@name='unique_name']").setValue("Уникальное имя");
+        $x("//blockquote").shouldHave(text("спрашивает"));
+
+        $x("//*[@class='unique_class']").shouldBe(visible);
     }
 }
